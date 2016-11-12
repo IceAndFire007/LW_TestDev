@@ -6,14 +6,14 @@ using System.Xml;
 /// <summary>
 /// Description résumée de WebService
 /// </summary>
-[WebService(Namespace = "http://tempuri.org/")]
+[WebService(Namespace = "http://localhost/")]
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
 // Pour autoriser l'appel de ce service Web depuis un script à l'aide d'ASP.NET AJAX, supprimez les marques de commentaire de la ligne suivante. 
 // [System.Web.Script.Services.ScriptService]
-public class WebService : System.Web.Services.WebService
+public class LM_TestDev_WS : System.Web.Services.WebService
 {
 
-    public WebService()
+    public LM_TestDev_WS()
     {
 
         //Supprimez les marques de commentaire dans la ligne suivante si vous utilisez des composants conçus 
@@ -62,6 +62,11 @@ public class WebService : System.Web.Services.WebService
     [WebMethod]
     public string XmlToJson(string xml)
     {
+        return XmlToJsonWithFormatting(xml, true);
+    }
+    [WebMethod]
+    public string XmlToJsonWithFormatting(string xml, bool isOutputIndented)
+    {
         // Instanciation of the XmlDocument where the xml string is will be loaded
         XmlDocument doc = new XmlDocument();
         try
@@ -77,7 +82,7 @@ public class WebService : System.Web.Services.WebService
         {
             // Serializing the XmlDocument to Json using Newtonsoft library
             // the seconde parameter makes the Json output well-formatted with indentation
-            return JsonConvert.SerializeXmlNode(doc, Newtonsoft.Json.Formatting.Indented);
+            return JsonConvert.SerializeXmlNode(doc, isOutputIndented ? Newtonsoft.Json.Formatting.Indented : Newtonsoft.Json.Formatting.None);
         }
         catch (Exception ex)
         {
