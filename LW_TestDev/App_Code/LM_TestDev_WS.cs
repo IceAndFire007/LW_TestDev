@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Web.Script.Serialization;
+using System.Web.Script.Services;
 using System.Web.Services;
 using System.Xml;
 
@@ -8,9 +10,8 @@ using System.Xml;
 /// </summary>
 [WebService(Namespace = "http://localhost/")]
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
-// Pour autoriser l'appel de ce service Web depuis un script à l'aide d'ASP.NET AJAX, supprimez les marques de commentaire de la ligne suivante. 
-// [System.Web.Script.Services.ScriptService]
-public class LM_TestDev_WS : System.Web.Services.WebService
+[ScriptService]
+public class LM_TestDev_WS : WebService
 {
 
     public LM_TestDev_WS()
@@ -18,6 +19,12 @@ public class LM_TestDev_WS : System.Web.Services.WebService
 
         //Supprimez les marques de commentaire dans la ligne suivante si vous utilisez des composants conçus 
         //InitializeComponent(); 
+    }
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string TestWS()
+    {
+        return "Hello!";
     }
 
     /// <summary>
@@ -34,6 +41,14 @@ public class LM_TestDev_WS : System.Web.Services.WebService
         if (n < 1 || n > 100)
             return -1;
         return FibonacciTailRecursive(n, 1, 0);
+    }
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string FibonacciJSON(int n)
+    {
+        if (n < 1 || n > 100)
+            return "-1";
+        return new JavaScriptSerializer().Serialize(FibonacciTailRecursive(n, 1, 0));
     }
     /// <summary>
     /// This function is the tail recursive version of the Fibonacci algorithm
@@ -60,11 +75,13 @@ public class LM_TestDev_WS : System.Web.Services.WebService
     /// it will return "Bad Xml format" if the input string is not a well-formed Xml
     /// </returns>
     [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
     public string XmlToJson(string xml)
     {
         return XmlToJsonWithFormatting(xml, true);
     }
     [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
     public string XmlToJsonWithFormatting(string xml, bool isOutputIndented)
     {
         // Instanciation of the XmlDocument where the xml string is will be loaded
