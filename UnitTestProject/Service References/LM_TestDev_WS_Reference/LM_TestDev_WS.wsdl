@@ -16,6 +16,16 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="FibonacciJSON">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="n" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FibonacciJSONResponse">
+        <s:complexType />
+      </s:element>
       <s:element name="XmlToJson">
         <s:complexType>
           <s:sequence>
@@ -45,6 +55,8 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="decimal" type="s:decimal" />
+      <s:element name="string" nillable="true" type="s:string" />
     </s:schema>
   </wsdl:types>
   <wsdl:message name="FibonacciSoapIn">
@@ -52,6 +64,12 @@
   </wsdl:message>
   <wsdl:message name="FibonacciSoapOut">
     <wsdl:part name="parameters" element="tns:FibonacciResponse" />
+  </wsdl:message>
+  <wsdl:message name="FibonacciJSONSoapIn">
+    <wsdl:part name="parameters" element="tns:FibonacciJSON" />
+  </wsdl:message>
+  <wsdl:message name="FibonacciJSONSoapOut">
+    <wsdl:part name="parameters" element="tns:FibonacciJSONResponse" />
   </wsdl:message>
   <wsdl:message name="XmlToJsonSoapIn">
     <wsdl:part name="parameters" element="tns:XmlToJson" />
@@ -65,24 +83,86 @@
   <wsdl:message name="XmlToJsonWithFormattingSoapOut">
     <wsdl:part name="parameters" element="tns:XmlToJsonWithFormattingResponse" />
   </wsdl:message>
+  <wsdl:message name="FibonacciHttpGetIn">
+    <wsdl:part name="n" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="FibonacciHttpGetOut">
+    <wsdl:part name="Body" element="tns:decimal" />
+  </wsdl:message>
+  <wsdl:message name="FibonacciJSONHttpGetIn">
+    <wsdl:part name="n" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="FibonacciJSONHttpGetOut" />
+  <wsdl:message name="XmlToJsonHttpGetIn">
+    <wsdl:part name="xml" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="XmlToJsonHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="XmlToJsonWithFormattingHttpGetIn">
+    <wsdl:part name="xml" type="s:string" />
+    <wsdl:part name="isOutputIndented" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="XmlToJsonWithFormattingHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
   <wsdl:portType name="LM_TestDev_WSSoap">
     <wsdl:operation name="Fibonacci">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">The Fibonacci service takes input an integer n and return the Nth value in the Fibonacci sequence</wsdl:documentation>
       <wsdl:input message="tns:FibonacciSoapIn" />
       <wsdl:output message="tns:FibonacciSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="FibonacciJSON">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">The Fibonacci service takes input an integer n and return the Nth value in the Fibonacci sequence (JSON version)</wsdl:documentation>
+      <wsdl:input message="tns:FibonacciJSONSoapIn" />
+      <wsdl:output message="tns:FibonacciJSONSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="XmlToJson">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">The XmlToJson service converts an Xml string to it's Json format if it's well-formed.</wsdl:documentation>
       <wsdl:input message="tns:XmlToJsonSoapIn" />
       <wsdl:output message="tns:XmlToJsonSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="XmlToJsonWithFormatting">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">The XmlToJson service converts an Xml string to it's Json format if it's well-formed.</wsdl:documentation>
       <wsdl:input message="tns:XmlToJsonWithFormattingSoapIn" />
       <wsdl:output message="tns:XmlToJsonWithFormattingSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="LM_TestDev_WSHttpGet">
+    <wsdl:operation name="Fibonacci">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">The Fibonacci service takes input an integer n and return the Nth value in the Fibonacci sequence</wsdl:documentation>
+      <wsdl:input message="tns:FibonacciHttpGetIn" />
+      <wsdl:output message="tns:FibonacciHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FibonacciJSON">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">The Fibonacci service takes input an integer n and return the Nth value in the Fibonacci sequence (JSON version)</wsdl:documentation>
+      <wsdl:input message="tns:FibonacciJSONHttpGetIn" />
+      <wsdl:output message="tns:FibonacciJSONHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="XmlToJson">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">The XmlToJson service converts an Xml string to it's Json format if it's well-formed.</wsdl:documentation>
+      <wsdl:input message="tns:XmlToJsonHttpGetIn" />
+      <wsdl:output message="tns:XmlToJsonHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="XmlToJsonWithFormatting">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">The XmlToJson service converts an Xml string to it's Json format if it's well-formed.</wsdl:documentation>
+      <wsdl:input message="tns:XmlToJsonWithFormattingHttpGetIn" />
+      <wsdl:output message="tns:XmlToJsonWithFormattingHttpGetOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="LM_TestDev_WSSoap" type="tns:LM_TestDev_WSSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="Fibonacci">
       <soap:operation soapAction="http://localhost/Fibonacci" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FibonacciJSON">
+      <soap:operation soapAction="http://localhost/FibonacciJSON" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -120,6 +200,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="FibonacciJSON">
+      <soap12:operation soapAction="http://localhost/FibonacciJSON" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="XmlToJson">
       <soap12:operation soapAction="http://localhost/XmlToJson" style="document" />
       <wsdl:input>
@@ -139,12 +228,52 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
+  <wsdl:binding name="LM_TestDev_WSHttpGet" type="tns:LM_TestDev_WSHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="Fibonacci">
+      <http:operation location="/Fibonacci" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FibonacciJSON">
+      <http:operation location="/FibonacciJSON" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="XmlToJson">
+      <http:operation location="/XmlToJson" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="XmlToJsonWithFormatting">
+      <http:operation location="/XmlToJsonWithFormatting" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
   <wsdl:service name="LM_TestDev_WS">
     <wsdl:port name="LM_TestDev_WSSoap" binding="tns:LM_TestDev_WSSoap">
       <soap:address location="http://localhost:54016/LM_TestDev_WS.asmx" />
     </wsdl:port>
     <wsdl:port name="LM_TestDev_WSSoap12" binding="tns:LM_TestDev_WSSoap12">
       <soap12:address location="http://localhost:54016/LM_TestDev_WS.asmx" />
+    </wsdl:port>
+    <wsdl:port name="LM_TestDev_WSHttpGet" binding="tns:LM_TestDev_WSHttpGet">
+      <http:address location="http://localhost:54016/LM_TestDev_WS.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>
