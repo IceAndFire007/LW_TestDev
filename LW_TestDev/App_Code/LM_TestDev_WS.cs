@@ -79,7 +79,7 @@ namespace LM_TestDev
             else
                 result = FibonacciTailRecursive(n, 1, 0);
             Context.Response.ContentType = "application/json";
-            Context.Response.Write(string.Format(@"{{ ""FibonacciJSON"" : ""{0}"" }}",result));
+            Context.Response.Write(string.Format(@"{{ ""n"" : ""{0}"", ""result"" : ""{1}"" }}", n, result));
 
         }
         /// <summary>
