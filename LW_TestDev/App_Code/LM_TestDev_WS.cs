@@ -17,7 +17,7 @@ namespace LM_TestDev
     /// </summary>
     [ScriptService]
     [WebService(Namespace = "http://localhost/")]
-    [WebServiceBinding(ConformsTo = WsiProfiles.None)]
+    [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     public class LM_TestDev_WS : WebService
     {
         // On définit une variable logger static qui référence l'instance du logger nommé Program
