@@ -106,13 +106,13 @@ namespace LM_TestDev
         /// The json form of the <paramref name="xml"/> string,
         /// it will return "Bad Xml format" if the input string is not a well-formed Xml
         /// </returns>
-        [WebMethod(CacheDuration = 3600, Description = "The XmlToJson service converts an Xml string to it's Json format if it's well-formed.")]
+        [WebMethod(CacheDuration = 3600, MessageName = "XmlToJson", Description = "The XmlToJson service converts an Xml string to it's Json format if it's well-formed.")]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public string XmlToJson(string xml)
         {
             return XmlToJson(xml, true);
         }
-        [WebMethod(CacheDuration = 3600, MessageName="XmlToJsonWithFormatting", Description = "The XmlToJson service converts an Xml string to it's Json format if it's well-formed.")]
+        [WebMethod(CacheDuration = 3600, MessageName = "XmlToJsonWithFormatting", Description = "The XmlToJson service converts an Xml string to it's Json format if it's well-formed.")]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public string XmlToJson(string xml, bool isOutputIndented)
         {
