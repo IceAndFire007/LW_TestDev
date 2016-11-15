@@ -17,7 +17,7 @@ namespace LM_TestDev
     /// </summary>
     [ScriptService]
     [WebService(Namespace = "http://localhost/")]
-    [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
+    [WebServiceBinding(ConformsTo = WsiProfiles.None)]
     public class LM_TestDev_WS : WebService
     {
         // On définit une variable logger static qui référence l'instance du logger nommé Program
@@ -29,8 +29,8 @@ namespace LM_TestDev
             // On récupère le chemin du fichier de config
             // On remplace le BasicConfigurator par le XmlConfigurator
             // et on charge la configuration définie dans le fichier log4net.config
-            //XmlConfigurator.Configure(new FileInfo(Directory.GetCurrentDirectory() + @"\log4net.config"));
-            BasicConfigurator.Configure();
+            XmlConfigurator.Configure(new FileInfo(Directory.GetCurrentDirectory() + @"\log4net.config"));
+            //BasicConfigurator.Configure();
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace LM_TestDev
         }
         [WebMethod(CacheDuration = 3600, Description = "The XmlToJson service converts an Xml string to it's Json format if it's well-formed.")]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public string XmlToJsonWithFormatting(string xml, bool isOutputIndented)
+        public string XmlToJson(string xml, bool isOutputIndented)
         {
             ConfigureLog4net();
 
