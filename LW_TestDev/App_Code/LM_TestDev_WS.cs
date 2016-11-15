@@ -114,7 +114,7 @@ namespace LM_TestDev
         }
         [WebMethod(CacheDuration = 3600, MessageName = "XmlToJsonWithFormatting", Description = "The XmlToJson service converts an Xml string to it's Json format if it's well-formed.")]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public string XmlToJson(string xml, bool? isOutputIndented)
+        public string XmlToJson(string xml, bool isOutputIndented)
         {
             ConfigureLog4net();
 
@@ -138,7 +138,7 @@ namespace LM_TestDev
             {
                 // Serializing the XmlDocument to Json using Newtonsoft library
                 // the seconde parameter makes the Json output well-formatted with indentation
-                string result = JsonConvert.SerializeXmlNode(doc, (isOutputIndented ?? true) ? Newtonsoft.Json.Formatting.Indented : Newtonsoft.Json.Formatting.None);
+                string result = JsonConvert.SerializeXmlNode(doc, isOutputIndented? Newtonsoft.Json.Formatting.Indented : Newtonsoft.Json.Formatting.None);
 
                 //Saving the ending time
                 DateTime end = DateTime.Now;
