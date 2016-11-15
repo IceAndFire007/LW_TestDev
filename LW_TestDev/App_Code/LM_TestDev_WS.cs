@@ -8,7 +8,7 @@ using System.Web.Script.Services;
 using System.Web.Services;
 using System.Xml;
 
-[assembly: XmlConfigurator(ConfigFile = "log4net.config", Watch = true)]
+[assembly: XmlConfigurator(ConfigFile = ".\\log4net.config", Watch = true)]
 namespace LM_TestDev
 {
     /// <summary>
