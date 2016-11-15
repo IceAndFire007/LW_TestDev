@@ -112,7 +112,7 @@ namespace LM_TestDev
         {
             return XmlToJson(xml, true);
         }
-        [WebMethod(CacheDuration = 3600, Description = "The XmlToJson service converts an Xml string to it's Json format if it's well-formed.")]
+        [WebMethod(CacheDuration = 3600, MessageName="XmlToJsonWithFormatting", Description = "The XmlToJson service converts an Xml string to it's Json format if it's well-formed.")]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public string XmlToJson(string xml, bool isOutputIndented)
         {
